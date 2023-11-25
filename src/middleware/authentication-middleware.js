@@ -15,10 +15,9 @@ export const authenticationMiddleware = (req, res, next) => {
 
     const user = userModel.findOne(id);
 
-    req.user = user
+    req.user = user;
 
     next();
-
   } catch (error) {}
-return res.sendStatus(401)
+  return res.sendStatus(401);
 };
