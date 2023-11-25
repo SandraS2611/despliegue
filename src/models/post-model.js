@@ -1,6 +1,8 @@
+import { v4 as uuid } from "uuid";
+
 let posts = [
   {
-    id: Date.now(),
+    id: uuid(),
     title: "Angular",
     desc: "Mi App",
     image:
@@ -12,7 +14,7 @@ let posts = [
 const createNewPost = ({ title, desc, image }) => {
   if (!title) return null;
 
-  const newPost = { id: Date.now(), title, desc, image };
+  const newPost = { id: uuid(), title, desc, image };
 
   posts.push(newPost);
 
@@ -38,13 +40,11 @@ const findPostByIdAndUpdate = (id, data) => {
 
   posts = posts.map((post) => {
     if (post.id === id) {
+      if (data.title) post.title = data.title;
+      if (data.desc) post.desc = data.desc;
+      if (data.image) post.image = data.image;
 
-      if (data.title) post.title = data.title
-      if (data.desc) post.desc = data.desc
-      if (data.image) post.image = data.image
-
-      return post
-
+      return post;
     }
     return post;
   });
