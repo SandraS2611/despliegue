@@ -22,7 +22,7 @@ const createNewPost = ({ title, desc, image }) => {
 };
 
 //!VER TODOS LOS POSTS
-const getAllPosts = () => {
+const getAllPosts = (id) => {
   return [...posts];
 };
 

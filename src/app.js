@@ -4,10 +4,11 @@ import cors from "cors"
 import helmet from "helmet"
 
 import { postRouter } from "./routes/posts.routes.js";
+import { userRouter } from "./routes/users.routes.js";
 
 import { env } from "../settings/envs.js"; 
-import { guardMiddleware } from "./middleware/middleware-guard.js";
-import { userRouter } from "./routes/users.routes.js";
+import { authenticationMiddleware } from "./middleware/authentication-middleware.js";
+import { authorizationMiddleware } from "./middleware/authorization-middleware.js";
 
 
 const app = express();
@@ -39,7 +40,7 @@ app.get('/', (req,res) => {  //!RENDERIZA
     res.sendFlie('index.html')
 })
 
-app.use('/posts', guardMiddleware, postRouter)
+app.use('/posts', authenticationMiddleware, authorizationMiddleware, postRouter)
 app.use('/users', userRouter)
 
 app.listen(env.PORT, () => {

@@ -2,7 +2,7 @@ import { postModel } from "../models/post-model.js"
 
 
 export const ctrlGetAllPosts = (req, res, ) => {
-  const posts = postModel.findAll()
+  const posts = postModel.findAll(req.user.id)
 
   res.json(posts)
 };

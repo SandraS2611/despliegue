@@ -1,29 +1,38 @@
-import { v4 as uuid } from "uuid" 
+import { v4 as uuid } from "uuid";
+import bcrypt from "bcrypt";
 
-let users = []
+let users = [];
 
-const createNewUser = ({ name, email, password }) => {
-    if (!name || !email || !password) return null
-    
-    const newUser = { id: uuid(), name, email, password }
+const createNewUser = async ({ name, email, password }) => {
+  if (!name || !email || !password) return null;
 
-    users.push(newUser)
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-    return newUser
-}
+  const newUser = {
+    id: uuid(),
+    name,
+    email,
+    password: hashedPassword,
+    isAdmin: name === "sol"
+  };
+
+  users.push(newUser);
+
+  return newUser;
+};
 
 const getUserById = (id) => {
-    const user = users.find((user) => user.id === id)
-    return user
-}
+  const user = users.find((user) => user.id === id);
+  return user;
+};
 
 const getUserByEmail = (email) => {
-    const user = users.find((user) => user.email === email)
-    return user
-}
+  const user = users.find((user) => user.email === email);
+  return user;
+};
 
 export const userModel = {
-    create: createNewUser,
-    findOne: getUserById,
-    findByEmail: getUserByEmail
-}
+  create: createNewUser,
+  findOne: getUserById,
+  findByEmail: getUserByEmail,
+};
